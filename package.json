@@ -1,0 +1,39 @@
+{
+  "name": "sheet2json",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "test": "jest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "package"
+  ],
+  "author": "Ayyub",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayyyub777/package.git"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.1",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-typescript": "^12.1.1",
+    "jest": "^29.7.0",
+    "rollup": "^4.24.0",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@rollup/plugin-json": "^6.1.0",
+    "google-auth-library": "^9.14.2",
+    "googleapis": "^144.0.0",
+    "tslib": "^2.8.0"
+  }
+}
