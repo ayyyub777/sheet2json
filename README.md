@@ -23,7 +23,7 @@ First, ensure you have a valid access token for the Google Sheets API. You can o
 Here is an example of how to use the `sheet2json` package:
 
 ```javascript
-const sheet2json = require("sheet2json");
+const sheet2json = require("@ayyyub/sheet2json");
 
 const sheet = new sheet2json(
   "YOUR_ACCESS_TOKEN_HERE"
