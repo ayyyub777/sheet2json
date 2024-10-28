@@ -1,41 +1,28 @@
-import { google } from "googleapis";
-import { OAuth2Client } from "google-auth-library";
+const { google } = require("googleapis");
+const { OAuth2Client } = require("google-auth-library");
 
-export interface SheetData
-  extends Array<Array<string | number | boolean | null>> {}
-
-export interface AllSheetData {
-  [sheetName: string]: SheetData;
-}
-
-export interface JsonSheetData {
-  [sheetName: string]: Record<string, string | number | boolean | null>[];
-}
-
-class sheet2json {
-  private oauth2Client: OAuth2Client;
-
-  constructor(accessToken: string) {
+class Sheet2Json {
+  constructor(accessToken) {
     this.oauth2Client = new google.auth.OAuth2();
     this.oauth2Client.setCredentials({ access_token: accessToken });
   }
 
-  private get sheetsClient() {
+  get sheetsClient() {
     return google.sheets({ version: "v4", auth: this.oauth2Client });
   }
 
   /**
    * Fetches spreadsheet data and converts it to JSON with column headers as keys
-   * @param spreadsheetId - The ID of the Google Spreadsheet
-   * @returns Object containing JSON data for each sheet
+   * @param {string} spreadsheetId - The ID of the Google Spreadsheet
+   * @returns {Promise<Object>} Object containing JSON data for each sheet
    * @throws {Error} If spreadsheet access fails or data is invalid
    */
-  async get(spreadsheetId: string): Promise<JsonSheetData> {
+  async get(spreadsheetId) {
     try {
       const rawData = await this.getRawSpreadsheetData(spreadsheetId);
       return this.convertToJson(rawData);
     } catch (error) {
-      throw new Error(`Failed to get JSON data: ${(error as Error).message}`);
+      throw new Error(`Failed to get JSON data: ${error.message}`);
     }
   }
 
@@ -43,9 +30,7 @@ class sheet2json {
    * Fetches raw spreadsheet data
    * @private
    */
-  private async getRawSpreadsheetData(
-    spreadsheetId: string
-  ): Promise<AllSheetData> {
+  async getRawSpreadsheetData(spreadsheetId) {
     try {
       // Get all sheet names
       const metadata = await this.sheetsClient.spreadsheets.get({
@@ -53,12 +38,10 @@ class sheet2json {
       });
 
       const sheetNames =
-        metadata.data.sheets?.map(
-          (sheet) => sheet.properties?.title as string
-        ) || [];
+        metadata.data.sheets?.map((sheet) => sheet.properties?.title) || [];
 
       // Fetch data from all sheets in parallel
-      const allData: AllSheetData = {};
+      const allData = {};
       await Promise.all(
         sheetNames.map(async (sheetName) => {
           const response = await this.sheetsClient.spreadsheets.values.get({
@@ -71,9 +54,7 @@ class sheet2json {
 
       return allData;
     } catch (error) {
-      throw new Error(
-        `Failed to get spreadsheet data: ${(error as Error).message}`
-      );
+      throw new Error(`Failed to get spreadsheet data: ${error.message}`);
     }
   }
 
@@ -81,7 +62,7 @@ class sheet2json {
    * Converts raw spreadsheet data to JSON format
    * @private
    */
-  private convertToJson(spreadsheetData: AllSheetData): JsonSheetData {
+  convertToJson(spreadsheetData) {
     if (
       !spreadsheetData ||
       typeof spreadsheetData !== "object" ||
@@ -90,7 +71,7 @@ class sheet2json {
       return {};
     }
 
-    const result: JsonSheetData = {};
+    const result = {};
 
     for (const sheet in spreadsheetData) {
       const data = spreadsheetData[sheet];
@@ -105,11 +86,11 @@ class sheet2json {
 
         result[sheet] = rows.map((row) => {
           return row.reduce((obj, value, index) => {
-            if (headers[index] === "string") {
+            if (typeof headers[index] === "string") {
               obj[headers[index]] = this.parseValue(value);
             }
             return obj;
-          }, {} as Record<string, string | number | boolean | null>);
+          }, {});
         });
       } else {
         result[sheet] = [];
@@ -123,9 +104,7 @@ class sheet2json {
    * Validates that headers are unique strings
    * @private
    */
-  private validateHeaders(
-    headers: Array<string | number | boolean | null>
-  ): boolean {
+  validateHeaders(headers) {
     if (!Array.isArray(headers)) return false;
 
     const seen = new Set();
@@ -142,9 +121,7 @@ class sheet2json {
    * Parses cell values into appropriate types
    * @private
    */
-  private parseValue(
-    value: string | number | boolean | null
-  ): string | number | boolean | null {
+  parseValue(value) {
     if (value === null || value === undefined) return null;
 
     // Try to parse numbers
@@ -159,4 +136,4 @@ class sheet2json {
   }
 }
 
-export default sheet2json;
+module.exports = Sheet2Json;
