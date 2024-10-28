@@ -1,7 +1,25 @@
 {
-  "name": "sheet2json",
+  "name": "@ayyyub/sheet2json",
   "version": "1.0.0",
   "main": "src/index.js",
+  "license": "MIT",
+  "keywords": [
+    "google-sheets-json",
+    "sheets-json",
+    "google-sheets-parser",
+    "sheet-json-converter",
+    "spreadsheet-json",
+    "json-data-extraction",
+    "google-sheets-data",
+    "sheet-data-to-json",
+    "json-from-sheets",
+    "google-sheets-export-json",
+    "json-from-google-sheets",
+    "sheets-data-export",
+    "sheet-to-json",
+    "json-sheets",
+    "sheets-to-object"
+  ],
   "dependencies": {
     "google-auth-library": "^9.14.2",
     "googleapis": "^144.0.0"
