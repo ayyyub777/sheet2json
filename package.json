@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "license": "MIT",
+  "author": "Ayyyub",
   "keywords": [
     "google-sheets-json",
     "sheets-json",
@@ -20,6 +21,10 @@
     "json-sheets",
     "sheets-to-object"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/username/repo-name.git"
+  },
   "dependencies": {
     "google-auth-library": "^9.14.2",
     "googleapis": "^144.0.0"
