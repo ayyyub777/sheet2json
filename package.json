@@ -1,6 +1,6 @@
 {
   "name": "@ayyyub/sheet2json",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Convert Google Sheets data to JSON",
   "main": "src/index.js",
   "license": "MIT",
