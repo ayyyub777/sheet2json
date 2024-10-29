@@ -13,7 +13,7 @@
 To install `sheet2json`, you can use npm:
 
 ```bash
-npm install sheet2json
+npm install @ayyyub/sheet2json
 ```
 
 ## Usage
