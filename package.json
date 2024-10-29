@@ -1,6 +1,7 @@
 {
   "name": "@ayyyub/sheet2json",
   "version": "1.0.0",
+  "description": "Convert Google Sheets data to JSON",
   "main": "src/index.js",
   "license": "MIT",
   "author": "Ayyyub",
@@ -23,7 +24,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/username/repo-name.git"
+    "url": "https://github.com/ayyyub777/sheet2json.git"
   },
   "dependencies": {
     "google-auth-library": "^9.14.2",
